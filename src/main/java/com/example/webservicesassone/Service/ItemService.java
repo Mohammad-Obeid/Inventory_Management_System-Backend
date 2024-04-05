@@ -23,12 +23,7 @@ public class ItemService {
 
     public Item getItembyID(int itemID) {
         Optional<Item> std = itemRepo.findById(itemID);
-        if(std.isPresent()){
-            return std.get();
-        }
-        else{
-            throw new IllegalStateException("Item with ID "+ itemID + " wasn't Found");
-        }
+        return std.orElse(null);
     }
 
 
@@ -62,6 +57,10 @@ public class ItemService {
 
 
     public List<Item> getAllItems() {
-        return itemRepo.findAll();
+        List<Item> items= itemRepo.findAll();
+        if(items.isEmpty()){
+            return null;
+        }
+        return items;
     }
 }

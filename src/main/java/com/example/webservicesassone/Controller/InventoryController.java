@@ -5,6 +5,7 @@ import com.example.webservicesassone.Model.Consumer;
 import com.example.webservicesassone.Model.Inventory;
 import com.example.webservicesassone.Service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +22,18 @@ public class InventoryController {
 
     @GetMapping("{inventoryID}")
     public ResponseEntity<Inventory> getInventoryByID(@PathVariable("inventoryID") int inventoryID){
-        Inventory inv= inventoryService.getInventoryByID(inventoryID);
-        return  ResponseEntity.ok().body(inv);
+        Optional<Inventory> inventory = Optional.ofNullable(inventoryService.getInventoryByID(inventoryID));
+        return inventory.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null));
     }
 
     @GetMapping("getinventories")
-    public List<Inventory> getAllInventories(){
-        return inventoryService.getAllInventories();
+    public ResponseEntity<List> getAllInventories(){
+        Optional<List> inventories = Optional.ofNullable(inventoryService.getAllInventories());
+        return inventories.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null));
     }
 
     @PostMapping("addnewinventory")

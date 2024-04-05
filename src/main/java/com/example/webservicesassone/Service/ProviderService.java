@@ -25,12 +25,7 @@ public class ProviderService {
 
     public Provider getProviderbyID(int providerID) {
         Optional<Provider> provider=providerRepo.findById(providerID);
-        if(provider.isPresent()){
-            return provider.get();
-        }
-        else{
-            throw new IllegalStateException("Provider with ID "+ providerID+" wasn't Found");
-        }
+        return provider.orElse(null);
     }
 
     public void addNewProvider(Provider provider) {
@@ -69,6 +64,9 @@ public class ProviderService {
     }
 
     public List<Provider> getAllProviders() {
-        return providerRepo.findAll();
+        List<Provider> Providers = (providerRepo.findAll());
+        if(Providers.isEmpty())
+            return null;
+        return Providers;
     }
 }

@@ -28,7 +28,7 @@ public class InventoryService {
             return dto;
         }
         else{
-            throw new IllegalStateException("Inventory with ID "+ inventory+" wasn't Found");
+            return null;
         }
     }
 
@@ -57,6 +57,10 @@ public class InventoryService {
     }
 
     public List<Inventory> getAllInventories() {
-        return inventoryRepo.findAll();
+        List<Inventory> inventories = inventoryRepo.findAll();
+        if (inventories.isEmpty()) {
+            return null;
+        }
+        return inventories;
     }
 }

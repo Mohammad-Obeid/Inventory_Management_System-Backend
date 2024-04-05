@@ -4,10 +4,12 @@ package com.example.webservicesassone.Controller;
 import com.example.webservicesassone.Model.Item;
 import com.example.webservicesassone.Service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("item")
 @RestController
@@ -19,13 +21,19 @@ public class ItemController {
     }
 
     @GetMapping("getitems")
-    public List<Item> getAllItems(){
-        return itemService.getAllItems();
+    public ResponseEntity<List> getAllItems(){
+        Optional<List> items= Optional.ofNullable(itemService.getAllItems());
+        return items.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null));
     }
 
     @GetMapping("/{itemID}")
-    public Item getItembyID(@PathVariable("itemID") int itemID){
-        return itemService.getItembyID(itemID);
+    public ResponseEntity<Item> getItembyID(@PathVariable("itemID") int itemID){
+        Optional<Item> item= Optional.ofNullable(itemService.getItembyID(itemID));
+        return item.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null));
     }
 
 

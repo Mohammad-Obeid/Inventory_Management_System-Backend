@@ -39,11 +39,22 @@ public class ConsumerService {
     }
 
     public Consumer UpdateConsumerByID(Consumer consumer, int consumerID) {
-        consumer.setConsumerID(consumerID);
-        return consumerRepo.save(consumer);
+        Optional<Consumer> cons=consumerRepo.findById(consumerID);
+        if(cons.isPresent()) {
+            consumer.setConsumerID(consumerID);
+            return consumerRepo.save(consumer);
+        }
+        else{
+            return null;
+        }
+
     }
 
     public List<Consumer> getAllConsumers() {
-        return consumerRepo.findAll();
+        List<Consumer> consumers= consumerRepo.findAll();
+        if(consumers.isEmpty()) {
+            return null;
+        }
+        return consumers;
     }
 }

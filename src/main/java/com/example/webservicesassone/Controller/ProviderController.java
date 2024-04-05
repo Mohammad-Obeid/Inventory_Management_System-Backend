@@ -4,10 +4,12 @@ import com.example.webservicesassone.Model.Inventory;
 import com.example.webservicesassone.Model.Provider;
 import com.example.webservicesassone.Service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("provider")
 @RestController
@@ -18,14 +20,20 @@ public class ProviderController {
     }
 
     @GetMapping("getproviders")
-    public List<Provider> getAllProviders(){
-        return providerService.getAllProviders();
+    public ResponseEntity<List> getAllProviders(){
+        Optional<List> Providers= Optional.ofNullable(providerService.getAllProviders());
+        return Providers.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null));
     }
 
 
     @GetMapping("{providerID}")
-    public Provider getProviderbyID(@PathVariable("providerID") int providerID){
-        return providerService.getProviderbyID(providerID);
+    public ResponseEntity<Provider> getProviderbyID(@PathVariable("providerID") int providerID){
+        Optional<Provider> provider= Optional.ofNullable(providerService.getProviderbyID(providerID));
+        return provider.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null));
     }
 
     @PostMapping("addprovider")

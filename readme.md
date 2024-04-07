@@ -29,7 +29,7 @@ fourth and final resource is <b>consumer</b>, consumer is the character that con
 As i showd before in the ER diagram, i have four entities, all of them have infinity relation except inventory it has 1, that means the first entity must have real data is Inventory, that allows me to add items data and put it in some inventory, after i add real data for Inventory and Item i can add item providers data, and finally consumers data can be added.
 <br>
 I defiend the http methods im gonna use for each service "i will show and specify them below in a detailed tables", im gonna use a set of methods for each service such as get entity by id, get list of entities, post new entity, update entity by id.
-These Methods were specified and designed in this Swagger link https://app.swaggerhub.com/apis/1200644_1/InventoryManagemntSystem/3.1.0, plus to the below Tables that also descripes HTTP methods used in my API
+These Methods were specified and designed in this Swagger link (https://app.swaggerhub.com/apis/1200644_1/InventoryManagemntSystem/Version1), plus to the below Tables that also descripes HTTP methods used in my API
 <br>
 <b></b>The below File contains 4 Tables the descripes the four Resources i Identified Previously, Http Methods i useed for each Entity, Response and Request sample of each Method, status Codes, and End Points of each Method</b>
 <br>
